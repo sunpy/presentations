@@ -9,6 +9,7 @@ Formats
 * odg - OpenOffice/LibreOffice Drawing
 * odp - OpenOffice/LibreOffice Presentation
 * ppt - MS Powerpoint presentation
+* key - Keynote presentation
 
 Directory Convention
 --------------------
