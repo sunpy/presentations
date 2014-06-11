@@ -1,0 +1,170 @@
+\documentclass[a0paper,portrait]{baposter}
+
+\usepackage{relsize}		% For \smaller
+\usepackage{url}			% For \url
+\usepackage{epstopdf}	% Included EPS files automatically converted to PDF to include with pdflatex
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{minted}
+\usepackage[none]{hyphenat}
+
+%%% Global Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\graphicspath{{pix/}}	% Root directory of the pictures 
+\tracingstats=2			% Enabled LaTeX logging with conditionals
+
+%%% Color Definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{bordercol}{RGB}{68,68,68}
+\definecolor{headercol1}{RGB}{254,210,11}
+\definecolor{headercol2}{RGB}{242,121,0}
+\definecolor{headerfontcol}{RGB}{0,0,0}
+\definecolor{boxcolor}{RGB}{255,255,230}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Utility functions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Save space in lists. Use this after the opening of the list %%%%%%%%%%%%%%%%
+\newcommand{\compresslist}{
+	\setlength{\itemsep}{1pt}
+	\setlength{\parskip}{0pt}
+	\setlength{\parsep}{0pt}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document Start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\typeout{Poster rendering started}
+
+%%% Setting Background Image %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\background{}
+
+%%% General Poster Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Eye Catcher, Title, Authors and University Images %%%%%%%%%%%%%%%%%%%%%%
+\begin{poster}{
+	grid=false,
+	% Option is left on true though the eyecatcher is not used. The reason is
+	% that we have a bit nicer looking title and author formatting in the headercol
+	% this way
+	eyecatcher=true, 
+	borderColor=bordercol,
+	headerColorOne=headercol1,
+	headerColorTwo=headercol2,
+	headerFontColor=headerfontcol,
+	% Only simple background color used, no shading, so boxColorTwo isn't necessary
+	boxColorOne=boxcolor,
+	headershape=roundedright,
+	headerborder=closed,
+	headerfont=\Large\sf\bf,
+	textborder=rectangle,
+	background=none,
+	headerborder=open,
+    boxshade=plain
+}
+%%% Eye Cacther %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{
+	\includegraphics[width=15em]{sunpy_logo_long}
+}
+%%% Title %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\sf\bf
+	SunPy: Python for Solar Physics
+}
+%%% Authors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{
+	\vspace{1em} Stuart Mumford \& The SunPy Community\\
+	{\smaller \url{http://sunpy.org}}
+}
+%%% Logo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{
+	\includegraphics[width=14em]{TUOS_Logo_CMYK_Keyline}
+}
+
+%%% Column 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{posterbox}[name=sunpy,column=2,row=0]{SunPy}
+SunPy is a project which aims to \textit{"facilitate and promote the use and development of community-led, free and open-source solar data-analysis software based on the scientific Python environment."}
+The SunPy project manages the development of the SunPy Python \textit{library} which provides tools for the acquisition, processing and visualisation of solar data using Python.
+\end{posterbox}
+
+\begin{posterbox}[name=why,column=2,below=sunpy]{Why Use SunPy?}
+SunPy is a new library for solar physics. It was started just over three years ago and is being built from the ground up to adhere to modern software engineering standards and be full of high-quality and useful code.
+
+One of the biggest reasons to use SunPy over other packages is its choice of implementation language.
+Python is a modern and general purpose dynamically typed, interpreted language which makes it ideal for the rapid prototyping workflow of scientists. 
+Python is also a transferable skill, with Python developers being in demand for many jobs from video game development to websites such as YouTube or Reddit.
+
+Python and the scientific Python ecosystem is all open source under permissive licences which allow its use and modification for free by anyone for any purpose.
+\end{posterbox}
+
+\begin{posterbox}[name=project,column=2,below=why]{The SunPy Project}
+The SunPy project is the organisation responsible for the development of the SunPy library and the materials surrounding it.
+It is governed by a board of elected members who appoint a lead developer to be responsible for the day-to-day development of the package.
+
+As well as being responsible for the `assets' of the SunPy project, the board performs the final review on SunPy Enhancement Proposals (SEPs) which are documents describing large changes to the SunPy project or library. SEPs can be submitted by anyone for review by the community and then the board.
+\end{posterbox}
+
+\begin{posterbox}[name=development,column=2,below=project]{Contribute to SunPy}
+The SunPy library is developed in the open on GitHub, where anyone is free to `fork' the project, modify it and contribute those changes back to SunPy via a `pull request'.
+SunPy aims to foster a friendly and collaborative atmosphere where all contributions no matter their size are welcome.
+
+This workflow enables the very detailed review of code before it is accepted into SunPy.
+SunPy and GitHub both use the very powerful \textit{git} distributed version control software to track changes to the code and manage branches and releases.
+\end{posterbox}
+
+\begin{posterbox}[name=acknoledgements,column=2,below=development,above=bottom]{More Info}
+For more information about SunPy see our website \url{http://sunpy.org} where you can find links to our mailing list, GitHub pages and IRC channel.
+\end{posterbox}
+
+%%%% Column 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{posterbox}[name=examples,span=2,column=0]{Using SunPy}
+SunPy provides routines to perform a number of common solar physics tasks.
+The SunPy library consists of three main components: three `datatypes' for solar images (\textit{Map}), time series (\textit{LightCurve}) and one and two dimensional spectra (\textit{Spectra}) which include visualisation routines; the \textit{net} package for accessing the Virtual Solar Observatory and other commonly used data providers such as HEK and HELIO; and utility functions for World Coordinate System transformations, solar coordinates and other general functions.
+
+This simple example demonstrates downloading some AIA data from the VSO and plotting it using SunPy.
+\begin{minted}{pycon}
+# Import libraries
+>>> import matplotlib.pyplot as plt
+>>> import sunpy.map
+>>> from sunpy.net import vso
+# Create the VSO client and query the VSO
+>>> client = vso.VSOClient()
+>>> results = client.query(vso.attrs.Instrument('AIA'), vso.attrs.Wave(171,171),
+...                        vso.attrs.Time('2014-01-01T00:00:00',
+...                                       '2014-01-01T00:00:12'))
+>>> results.show()
+Start time           End time             Source  Instrument  Type    
+----------           --------             ------  ----------  ----    
+2014-01-01 00:00:11  2014-01-01 00:00:12  SDO     AIA         FULLDISK
+
+>>> files = client.get(res).wait()  # Download the results of the query
+>>> aiamap = sunpy.map.Map(files[0])  # Create a SunPy Map from the first file
+>>> aiamap.plot()  # Make a plot using default options
+>>> plt.show()  # Display the plot
+\end{minted}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.58\textwidth]{aia_171}
+\end{figure}
+
+\end{posterbox}
+
+\begin{posterbox}[name=scipy,span=2,column=0,row=0,below=examples,above=bottom]{Scientific Python}
+\begin{wrapfigure}{r}{10em}
+	\includegraphics[width=10em]{python-logo-inkscape}
+\end{wrapfigure}
+Python is a general purpose programming language that is widely used for a variety of applications.
+It also has a thriving ecosystem of scientific oriented packages which provide things like high-speed array operations (\textit{numpy}), common scientific operations (\textit{SciPy}), publication ready visualisation (\textit{matplotlib}) as well as symbolic algebra (\textit{SymPy}) and more focused packages such as \textit{scikit-image} for image processing and \textit{Astropy} a core package for astronomy.
+\\
+\\
+As well as this there are projects such as \textit{Spyder} (a scientific IDE) and IPython which aim to make code easier to write and debug. IPython also provides the IPython Notebook which is a live IPython session controlled from your web browser and makes it easy to combine code execution, text, mathematics, plots and rich media into a easy to share and reproducible format.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{notebook}
+\end{figure}
+\end{posterbox}
+
+\end{poster}
+\end{document}
