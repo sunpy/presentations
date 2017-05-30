@@ -1,0 +1,118 @@
+body {
+    font-size: 160%;
+    font-family: Lato, Ariel, sans-serif !important;
+}
+
+div.slides {
+    margin-top: -5%;
+}
+
+.left {
+    width: 49%;
+    float: left;
+}
+
+.right {
+    width: 49%;
+    float: right;
+}
+
+.grid {
+    height: 100px;
+}
+
+.center {
+    text-align: center;
+}
+
+div.center {
+    margin: 0 auto;
+    width: initial;
+}
+
+div.clear {
+    clear: both;
+}
+
+h1 {
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+h2 {
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+h3 {
+    padding-bottom: 1em;
+}
+
+div.prompt {
+    display: none;
+}
+
+div.highlight {
+    font-size: 85%; /* This Seems to give an approximate 80char line at 1024 */
+}
+
+div.output_html {
+    font-size: 85%;
+}
+
+div.output_subarea {
+    max-width: 100% !important;
+}
+
+div.output_png {
+    text-align: center;
+}
+
+div.img-fit {
+    text-align: center;
+}
+
+div.img-fit > img {
+    display: inline-block;
+}
+
+li {
+    padding-top: 1em !important;
+}
+
+ul.logos {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+ul.logos li {
+    list-style: none;
+    height:150px;
+
+}
+
+.output_stderr {
+    display: none;
+}
+
+div.output_area .rendered_html img, div.output_area .rendered_html table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.data-table {
+    border-collapse: collapse;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #000;
+}
+
+.align-center {
+    text-align: center;
+}
+
+div.slides {
+    min-width: 900px;
+}
