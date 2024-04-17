@@ -14,5 +14,5 @@ Formats
 Directory Convention
 --------------------
 
-<YYYY-MM-DD>_<SHORT-NAME>_<MEETING>(<CITY>)
+`<YYYY-MM-DD>_<SHORT-NAME>_<MEETING>(<CITY>)`
 
